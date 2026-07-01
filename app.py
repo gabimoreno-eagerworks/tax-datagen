@@ -28,10 +28,32 @@ num_transaction = st.number_input("Number of transactions", min_value=1, max_val
 
 st.divider()
 
-mode = st.radio("Mode", ["E-commerce", "Outlet"])
-store_id = ""
-if mode == "Outlet":
-    store_id = st.text_input("Store ID")
+ecommerce = st.checkbox("E-commerce")
+outlet = st.checkbox("Outlet")
+if "store_ids" not in st.session_state:
+    store_ids = st.session_state.store_ids = []
+
+
+if outlet:
+
+    col1, col2,_ = st.columns([1, 1, 8])
+    with col1:
+        add_store_id = st.button("➕")
+    with col2:
+        remove_store_id = st.button("➖")
+
+    if add_store_id:
+        st.session_state.store_ids.append("")
+    if remove_store_id and len(st.session_state.store_ids) > 1:
+        st.session_state.store_ids.pop()
+
+    for i in range(len(st.session_state.store_ids)):
+        st.session_state.store_ids[i] = st.text_input(
+            f"Store ID {i + 1}",
+            value=st.session_state.store_ids[i],
+            key=f"store_id_{i}",
+        )
+
 
 st.divider()
 
@@ -78,6 +100,14 @@ generate_button = st.button("Generate")
 
 if generate_button:
 
+    store_ids = st.session_state.store_ids
+    if ecommerce and not outlet:
+        store_ids = [""]
+    elif outlet and not ecommerce:
+        store_ids = st.session_state.store_ids
+    elif ecommerce and outlet:
+        store_ids = st.session_state.store_ids + [""]
+
     if not state and not county and not city and not zip_code:
         st.error("At least one valid location input is required.", icon="🚨")
         st.stop()
@@ -94,7 +124,7 @@ if generate_button:
     state, county, city, zip_code = fill_location(us_file, state, county, city, zip_code)
                     
     file_path = make_excel(subcategory, num_transaction, state, file_name,
-    store_id, county, city, zip_code)
+    store_ids, county, city, zip_code)
 
     st.success(file_name + " was generated successfully.", icon="✅")
 

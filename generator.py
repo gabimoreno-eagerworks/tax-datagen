@@ -81,7 +81,7 @@ def random_number_amount():
 
     return gross, exempt, taxable, st_collected, tax_purchases, use_tax_accrued
 
-def make_excel(subcategory, num_transaction, state=None, file_name=None, store_id=None, county=None, city=None, zip_code=None):
+def make_excel(subcategory, num_transaction, state=None, file_name=None, store_ids=None, county=None, city=None, zip_code=None):
 
     wb = Workbook()
     ws = wb.active
@@ -106,7 +106,7 @@ def make_excel(subcategory, num_transaction, state=None, file_name=None, store_i
     for t in range(num_transaction):
         gross, exempt, taxable, st_collected, tax_purchases, use_tax_accrued = random_number_amount()
         row = [
-            store_id,
+            store_ids[t % len(store_ids)],
             state,
             county,
             city,

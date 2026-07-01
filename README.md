@@ -1,4 +1,3 @@
-📄 Versión en español disponible en `README_ES.md`
 
 Tax-DataGen
 
@@ -129,11 +128,11 @@ This project uses the Zippopotam API to validate ZIP codes and ensure consistenc
   - Each structure would be organized in separate Excel tabs for better separation and reporting.
 
 
-## ▶️ How to run and use the Application with Docker
+## ▶️ How to run and use the Application without Docker
 
 ## ⚠️ Preconditions
 
-* Ensure Docker Desktop is running before executing commands
+* Python **3.11** must be installed
 * Port **8501** must be available
 * Generated files will be saved in the `/output` directory
 
@@ -146,27 +145,39 @@ cd tax-datagen
 
 ---
 
-### 2. Build the Docker image
+### 2. Create and activate a virtual environment
 
-Make sure Docker is installed and running, then execute:
+On macOS/Linux:
 
 ```bash
-docker build -t tax-datagen .
+python3 -m venv venv
+source venv/bin/activate
+```
+
+On Windows:
+
+```bash
+python -m venv venv
+venv\Scripts\activate
 ```
 
 ---
 
-### 3. Run the container
+### 3. Install the dependencies
 
 ```bash
-docker run -p 8501:8501 tax-datagen
+pip install -r requirements.txt
 ```
 
 ---
 
-### 4. Open the application
+### 4. Run the application
 
-Go to the following URL in your browser:
+```bash
+streamlit run app.py
+```
+
+Streamlit will start the server and open the application. If it does not open automatically, go to the following URL in your browser:
 
 ```
 http://localhost:8501
