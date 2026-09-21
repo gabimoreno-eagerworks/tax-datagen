@@ -130,7 +130,7 @@ def make_excel(subcategory_ids, num_transaction, pools, file_name=None):
         raw_list.append(row)
 
 
-    ordered_list = sorted(raw_list, key=lambda x: (not x[0], str(x[0]).lower()))
+    ordered_list = sorted(raw_list, key=lambda x: (not x[0], str(x[0]).lower(), str(x[1]).lower(), str(x[2]).lower(), str(x[5]).lower()))
     ws.append(headers)
     for row in ordered_list:
         ws.append(row) 

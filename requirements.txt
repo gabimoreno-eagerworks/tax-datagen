@@ -1,4 +1,4 @@
-streamlit
+streamlit==1.x.y
 openpyxl
 requests
 python-dotenv
